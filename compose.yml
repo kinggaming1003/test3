@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   windows:
-    image: dockur/windows # This is the correct image name.
+    image: dockurr/windows # This is the correct image name.
     container_name: windows
     environment:
       - VERSION=11
