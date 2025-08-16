@@ -1,6 +1,11 @@
 {
   "name": "windows",
   "service": "windows",
-  "forwardPorts": [8006],
-  "dockerComposeFile": "compose.yml"
+  "forwardPorts": [8006, 3389],
+  "dockerComposeFile": "compose.yml",
+  "customizations": {
+    "codespaces": {
+      "postAttachCommand": "ngrok tcp 3389 --log=stdout > ngrok.log &"
+    }
+  }
 }
