@@ -5,7 +5,7 @@
   "dockerComposeFile": "compose.yml",
   "customizations": {
     "codespaces": {
-      "postAttachCommand": "ngrok tcp 3389 --log=stdout > ngrok.log &"
+      "postCreateCommand": "ngrok config add-authtoken 1sexnbULPxa5yDKR7xImFKqCg8o_335Laer65GytXuseDwNEH"
     }
   }
 }
