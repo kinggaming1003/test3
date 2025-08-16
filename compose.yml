@@ -1,6 +1,8 @@
+version: '3.8'
+
 services:
   windows:
-    image: dockur/windows # Corrected image name (single 'r')
+    image: dockur/windows # This is the correct image name.
     container_name: windows
     environment:
       - VERSION=11
@@ -16,7 +18,7 @@ services:
       - 3389:3389/tcp
       - 3389:3389/udp
     volumes:
-      - ./windows:/storage # Use this for persistent storage in your Codespace
+      - ./windows:/storage
     deploy:
       resources:
         reservations:
