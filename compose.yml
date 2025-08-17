@@ -1,58 +1,38 @@
-# Use the latest version of Docker Compose syntax.
 version: '3.8'
 
-# Define the services (containers) for your application.
 services:
   windows:
-    # Use the correct Docker image for the Windows container.
     image: dockurr/windows
-    
-    # Give the container a friendly name.
     container_name: windows
-    
-    # Set environment variables for the container.
-    # This configures the Windows version, username, and password.
     environment:
       - VERSION=11
       - USERNAME=Atul
       - PASSWORD=game1234
-      
-    # Map host devices to the container for virtualization.
-    # /dev/kvm is for hardware virtualization acceleration.
-    # /dev/net/tun is for network access.
     devices:
       - /dev/kvm
       - /dev/net/tun
-      
-    # Add network capabilities needed for the container.
     cap_add:
       - NET_ADMIN
-      
-    # Set deployment constraints for the container.
-    # This reserves CPU cores and memory, which are critical for performance.
     deploy:
       resources:
         reservations:
-          # Allocate 4 CPU cores for the Windows VM.
           cpus: '4'
-          # Allocate 14GB of RAM for the Windows VM.
           memory: '14G'
-          
-    # Map container ports to host ports.
-    # 8006:8006 maps the web client port.
-    # 3389:3389/tcp and 3389:3389/udp map the RDP port.
     ports:
       - 8006:8006
       - 3389:3389/tcp
       - 3389:3389/udp
-      
-    # Mount a volume to persist data inside the container.
-    # This maps a local 'windows' folder to the container's '/storage' directory.
     volumes:
       - ./windows:/storage
-      
-    # Ensure the container restarts automatically if it stops.
     restart: always
-    
-    # Allow a 2-minute grace period for the container to stop cleanly.
     stop_grace_period: 2m
+
+  ngrok:
+    image: ngrok/ngrok:latest
+    container_name: ngrok
+    environment:
+      - NGROK_AUTHTOKEN=1sexnbULPxa5yDKR7xImFKqCg8o_335Laer65GytXuseDwNEH
+    command: tcp windows:3389
+    depends_on:
+      - windows
+    restart: always
